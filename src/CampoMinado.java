@@ -1,17 +1,35 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class CampoMinado {
-    GeraPosicao[] minas;
+    List<GeraPosicao> minas;
 
     CampoMinado(int x){
-        minas = new GeraPosicao[x];
-        while (minas.length<x){
-
+        int tamanho_matriz = x * x;
+        int  qtd_minas= (int)(tamanho_matriz * 0.2);
+        minas = new ArrayList<>();
+        while (true){
+            if (minas.size()==qtd_minas){
+                break;
+            }
+            GeraPosicao posicao = new GeraPosicao(tamanho_matriz);
+            if (!minas.contains(posicao)){
+                minas.add(posicao);
+            }
         }
-        System.out.println(Arrays.toString(minas));
+        minas.stream().forEach(System.out::println);
+        System.out.println(minas.size());
     }
 
+}
+
+class Teste{
+    public static void main(String[] args) {
+        CampoMinado c = new CampoMinado(50);
+
+    }
 }
 class GeraPosicao{
     int [] posicao;
@@ -20,10 +38,7 @@ class GeraPosicao{
     GeraPosicao(int x){
         int X = pos.nextInt(x);
         int Y = pos.nextInt(x);
-        if (x!=Y) {
-            posicao = new int[]{X, Y};
-        }
-
+        posicao = new int[]{X, Y};
     }
 
     @Override
@@ -44,12 +59,5 @@ class GeraPosicao{
         return "GeraPosicao{" +
                 "posicao=" + Arrays.toString(posicao) +
                 '}';
-    }
-}
-
-class Teste{
-    public static void main(String[] args) {
-        CampoMinado f = new CampoMinado(10);
-
     }
 }
